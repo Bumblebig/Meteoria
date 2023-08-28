@@ -320,6 +320,14 @@ h4 {
 
   .main {
     width: 100%;
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+  }
+
+  header {
+    background-color: #343a4098;
+    padding: 3rem 2rem;
   }
 
   input {
