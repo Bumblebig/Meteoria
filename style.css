@@ -239,8 +239,18 @@ aside svg:hover {
     height: 100%;
   }
 
+  .main {
+    width: 100%;
+  }
+
   input {
-    width: 20rem;
+    width: 22rem;
+    border-radius: 20px;
+    padding: 0.9rem 3.8rem 0.9rem 0.9rem;
+  }
+
+  .input-search-icon {
+    right: 8px;
   }
 
   .hour {
@@ -252,7 +262,7 @@ aside svg:hover {
   }
 
   .location-container {
-    margin-top: 10vh;
+    margin-top: 8vh;
   }
 
   .future-forecast {
