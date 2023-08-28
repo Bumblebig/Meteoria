@@ -103,6 +103,12 @@ input {
   font-weight: 700;
 }
 
+.menu-bar {
+  display: none;
+  width: 3rem;
+  cursor: pointer;
+}
+
 /* LOCATION INFO */
 
 .location-container {
@@ -223,12 +229,34 @@ aside svg:hover {
       hsla(178, 44%, 32%, 1) 100%
     );
 
-    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#1E6C8E", endColorstr="#2E7775", GradientType=1 )5;
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#1E6C8E", endColorstr="#2E7775", GradientType=1 );
+    overflow-x: hidden;
   }
 
   main {
     display: block;
+    width: 100%;
     height: 100%;
+  }
+
+  input {
+    width: 20rem;
+  }
+
+  .hour {
+    display: none;
+  }
+
+  .menu-bar {
+    display: block;
+  }
+
+  .location-container {
+    margin-top: 10vh;
+  }
+
+  .future-forecast {
+    flex-flow: column;
   }
 
   aside {
