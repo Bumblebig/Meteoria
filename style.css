@@ -201,6 +201,8 @@ aside svg:hover {
 
 @media only screen and (max-width: 750px) {
   body {
+    min-width: 375px;
+
     background: hsla(198, 65%, 34%, 1);
 
     background: linear-gradient(
@@ -222,5 +224,14 @@ aside svg:hover {
     );
 
     filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#1E6C8E", endColorstr="#2E7775", GradientType=1 )5;
+  }
+
+  main {
+    display: block;
+    height: 100%;
+  }
+
+  aside {
+    display: none;
   }
 }
