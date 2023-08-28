@@ -44,6 +44,7 @@ body {
   );
 
   filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#0E1C26", endColorstr="#2A454B", GradientType=1 );
+  background-attachment: fixed;
   transition: all ease-out 0.5s;
 }
 
@@ -306,6 +307,8 @@ h4 {
       hsla(159, 35%, 45%, 1) 0%,
       hsla(176, 68%, 12%, 1) 100%
     );
+
+    background-attachment: fixed;
 
     filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#4A9B7F", endColorstr="#0A3431", GradientType=1 );
 
