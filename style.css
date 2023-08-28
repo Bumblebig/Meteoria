@@ -103,6 +103,11 @@ input {
   font-weight: 700;
 }
 
+.hour-mobile {
+  display: none;
+  font-weight: 600;
+}
+
 .menu-bar {
   display: none;
   width: 3rem;
@@ -257,6 +262,10 @@ aside svg:hover {
     display: none;
   }
 
+  .hour-mobile {
+    display: block;
+  }
+
   .menu-bar {
     display: block;
   }
@@ -267,6 +276,11 @@ aside svg:hover {
 
   .future-forecast {
     flex-flow: column;
+    gap: 3rem;
+  }
+
+  .future {
+    width: 100%;
   }
 
   aside {
