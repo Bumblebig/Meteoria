@@ -16,29 +16,31 @@ body {
   min-width: 375px;
   color: #f2f2f2;
   overflow-x: hidden;
-  /* background: linear-gradient(50deg, rgb(236, 49, 180), rgb(240, 111, 72)) 50%; */
 
-  background: hsla(155, 23%, 71%, 1);
+  background: hsla(205, 46%, 10%, 1);
 
   background: linear-gradient(
     50deg,
-    hsla(155, 23%, 71%, 1) 0%,
-    hsla(302, 17%, 32%, 1) 100%
+    hsla(205, 46%, 10%, 1) 0%,
+    hsla(191, 28%, 23%, 1) 50%,
+    hsla(207, 41%, 27%, 1) 100%
   );
 
   background: -moz-linear-gradient(
     50deg,
-    hsla(155, 23%, 71%, 1) 0%,
-    hsla(302, 17%, 32%, 1) 100%
+    hsla(205, 46%, 10%, 1) 0%,
+    hsla(191, 28%, 23%, 1) 50%,
+    hsla(207, 41%, 27%, 1) 100%
   );
 
   background: -webkit-linear-gradient(
     50deg,
-    hsla(155, 23%, 71%, 1) 0%,
-    hsla(302, 17%, 32%, 1) 100%
+    hsla(205, 46%, 10%, 1) 0%,
+    hsla(191, 28%, 23%, 1) 50%,
+    hsla(207, 41%, 27%, 1) 100%
   );
 
-  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#A4C6B8", endColorstr="#5E435D", GradientType=1 );
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#0E1C26", endColorstr="#2A454B", GradientType=1 );
 }
 
 p {
@@ -129,7 +131,6 @@ input {
   display: block;
   width: 12rem;
   height: 12rem;
-  border: 2px solid black;
   margin: 0 auto 3rem auto;
 }
 
@@ -164,9 +165,9 @@ input {
 }
 
 .image {
+  display: block;
   width: 4rem;
   height: 4rem;
-  border: 2px solid black;
   margin: auto;
 }
 
@@ -196,4 +197,30 @@ aside svg {
 
 aside svg:hover {
   stroke: #dee2e6;
+}
+
+@media only screen and (max-width: 750px) {
+  body {
+    background: hsla(198, 65%, 34%, 1);
+
+    background: linear-gradient(
+      50deg,
+      hsla(198, 65%, 34%, 1) 0%,
+      hsla(178, 44%, 32%, 1) 100%
+    );
+
+    background: -moz-linear-gradient(
+      50deg,
+      hsla(198, 65%, 34%, 1) 0%,
+      hsla(178, 44%, 32%, 1) 100%
+    );
+
+    background: -webkit-linear-gradient(
+      50deg,
+      hsla(198, 65%, 34%, 1) 0%,
+      hsla(178, 44%, 32%, 1) 100%
+    );
+
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#1E6C8E", endColorstr="#2E7775", GradientType=1 )5;
+  }
 }
