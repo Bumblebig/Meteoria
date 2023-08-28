@@ -1,0 +1,3 @@
+# Meteoria - A web weather forecast app
+
+## More info soon...

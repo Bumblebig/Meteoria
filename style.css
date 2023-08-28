@@ -1,0 +1,199 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: "Josefin Sans", sans-serif;
+  line-height: 1;
+  font-weight: 400;
+  max-width: 1440px;
+  min-width: 375px;
+  color: #f2f2f2;
+  overflow-x: hidden;
+  /* background: linear-gradient(50deg, rgb(236, 49, 180), rgb(240, 111, 72)) 50%; */
+
+  background: hsla(155, 23%, 71%, 1);
+
+  background: linear-gradient(
+    50deg,
+    hsla(155, 23%, 71%, 1) 0%,
+    hsla(302, 17%, 32%, 1) 100%
+  );
+
+  background: -moz-linear-gradient(
+    50deg,
+    hsla(155, 23%, 71%, 1) 0%,
+    hsla(302, 17%, 32%, 1) 100%
+  );
+
+  background: -webkit-linear-gradient(
+    50deg,
+    hsla(155, 23%, 71%, 1) 0%,
+    hsla(302, 17%, 32%, 1) 100%
+  );
+
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#A4C6B8", endColorstr="#5E435D", GradientType=1 );
+}
+
+p {
+  font-weight: 400;
+}
+
+/* Main app */
+main {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+}
+
+/* layouts */
+.main {
+  width: 95%;
+  padding: 3rem 2rem;
+  height: 100%;
+}
+
+/* HEADER */
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+h3 {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.input-container {
+  position: relative;
+}
+
+input {
+  width: 28rem;
+  height: 3rem;
+  border: none;
+  outline: none;
+  padding: 0.6rem 3.5rem 0.6rem 0.6rem;
+  font-size: 1.5rem;
+  font-family: "Josefin Sans", sans-serif;
+}
+
+.input-search-icon {
+  cursor: pointer;
+  position: absolute;
+  width: 3rem;
+  height: 3rem;
+  color: rgb(33, 33, 34);
+  top: 0;
+  right: 0;
+}
+
+.hour {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+/* LOCATION INFO */
+
+.location-container {
+  /* margin-top: 50px; */
+  margin-top: 6.5vh;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.location {
+  font-size: 3.2rem;
+}
+
+.time {
+  font-size: 1.8rem;
+}
+
+/* FORECAST */
+
+.cur-forecast {
+  text-align: center;
+  margin-top: 10vh;
+}
+
+.cur-image {
+  display: block;
+  width: 12rem;
+  height: 12rem;
+  border: 2px solid black;
+  margin: 0 auto 3rem auto;
+}
+
+.cur-weather {
+  font-size: 3.6rem;
+  font-weight: 700;
+}
+
+.future-forecast {
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.future {
+  background-color: #f8f9fa52;
+  backdrop-filter: blur(10px);
+  padding: 1.6rem 2.4rem;
+  border-radius: 5px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+.day {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.image {
+  width: 4rem;
+  height: 4rem;
+  border: 2px solid black;
+  margin: auto;
+}
+
+.data {
+  font-size: 2rem;
+}
+
+/* ASIDE */
+
+aside {
+  box-sizing: inherit;
+  background-color: #343a40;
+  padding: 3rem 0.5rem 3rem 1.5rem;
+  font-size: 1.6rem;
+  font-weight: 400;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 30px;
+  width: 6.8rem;
+}
+
+aside svg {
+  width: 3rem;
+  cursor: pointer;
+  stroke: rgb(179, 177, 177);
+}
+
+aside svg:hover {
+  stroke: #dee2e6;
+}
