@@ -287,3 +287,9 @@ aside svg:hover {
     display: none;
   }
 }
+
+@media only screen and (max-width: 550px) {
+  h3 {
+    font-size: 2.3rem;
+  }
+}
