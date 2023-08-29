@@ -1,3 +1,5 @@
-# Meteoria - A web weather forecast app
+# Meteoria - A weather forecast app
 
 ## More info soon...
+
+Work in progress!

@@ -5,6 +5,10 @@
 // GENERAL
 const searchForm = document.querySelector(".search-form");
 
+// LOCATION
+const locationErr = document.querySelector(".location-err");
+const curLocation = document.querySelector(".location");
+
 // TIME AND DATE
 const deskTime = document.querySelector(".hour");
 const mobileTime = document.querySelector(".hour-mobile");
@@ -126,8 +130,8 @@ navigator.geolocation.getCurrentPosition(
     curPosition = [lat, long];
   },
   (err) => {
-    const locationErr = document.querySelector(".location-err");
     removeClass(locationErr, "hidden");
+    curLocation.textContent = "----";
 
     setTimeout(() => {
       locationErr.style.top = "10%";
