@@ -20,7 +20,11 @@
         <header>
           <h3>meteoria</h3>
           <div class="input-container">
-            <input type="text" placeholder="Search for city" />
+            <input
+              type="text"
+              placeholder="Search for city"
+              class="search-form"
+            />
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -91,7 +95,11 @@
         </section>
       </section>
       <aside>
-        <div title="menu">
+        <div
+          title="menu"
+          class="desk-nav desk-menu-bar"
+          data-modal="menu-modal"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -108,7 +116,7 @@
           </svg>
         </div>
 
-        <div title="search">
+        <div title="search" class="desk-nav desk-search true">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -125,7 +133,7 @@
           </svg>
         </div>
 
-        <div title="contact">
+        <div title="contact" class="desk-nav desk-contact" data-modal="me">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -142,7 +150,7 @@
           </svg>
         </div>
 
-        <div title="settings">
+        <div title="settings" class="desk-nav desk-settings" data-modal="ui">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -167,7 +175,7 @@
     </main>
     <article class="modal menu-modal hidden">
       <h4>Menu</h4>
-      <div class="menu-items">
+      <div class="menu-items" data-modal="ui">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
