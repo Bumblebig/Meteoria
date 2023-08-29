@@ -116,3 +116,29 @@ menuModal.addEventListener("click", function (e) {
 
 // TIME AND DATE
 dateNTime();
+let curPosition;
+
+// LOCATION
+navigator.geolocation.getCurrentPosition(
+  (position) => {
+    const { latitude: lat, longitude: long } = position.coords;
+    console.log(lat, long);
+    curPosition = [lat, long];
+  },
+  (err) => {
+    const locationErr = document.querySelector(".location-err");
+    removeClass(locationErr, "hidden");
+
+    setTimeout(() => {
+      locationErr.style.top = "10%";
+    }, 800);
+
+    setTimeout(() => {
+      locationErr.style.top = "-10%";
+    }, 5000);
+
+    setTimeout(() => {
+      addClass(locationErr, "hidden");
+    }, 5500);
+  }
+);

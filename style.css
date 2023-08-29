@@ -280,6 +280,20 @@ h4 {
   border-radius: 5px;
 }
 
+.error {
+  position: absolute;
+  top: -10%;
+  right: 50%;
+  transform: translateX(50%);
+  background-color: #343a40;
+  color: #f2f2f2;
+  font-size: 1.6rem;
+  padding: 15px;
+  border-radius: 10px;
+  z-index: 69;
+  transition: all ease-in 0.45s;
+}
+
 .hidden {
   display: none;
 }
