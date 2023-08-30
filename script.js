@@ -4,6 +4,7 @@
 /////////////////////////////////////////////////////////////
 // GENERAL
 const searchForm = document.querySelector(".search-form");
+const curFore = document.querySelector(".cur-forecast");
 
 // LOCATION
 const locationErr = document.querySelector(".location-err");
@@ -120,29 +121,105 @@ menuModal.addEventListener("click", function (e) {
 
 // TIME AND DATE
 dateNTime();
-let curPosition;
+setInterval(dateNTime, 1000);
 
 // LOCATION
-navigator.geolocation.getCurrentPosition(
-  (position) => {
-    const { latitude: lat, longitude: long } = position.coords;
-    console.log(lat, long);
-    curPosition = [lat, long];
-  },
-  (err) => {
-    removeClass(locationErr, "hidden");
-    curLocation.textContent = "----";
 
-    setTimeout(() => {
-      locationErr.style.top = "10%";
-    }, 800);
+// let [lat, long] = curPosition;
 
-    setTimeout(() => {
-      locationErr.style.top = "-10%";
-    }, 5000);
+const getCurWeather = function () {
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const { latitude: lat, longitude: lon } = position.coords;
+      console.log(lat, lon);
+      fetch(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=29dbb8ece1d7df04ec2416e7dc4e2d61`
+      )
+        .then(
+          (response) => {
+            response.json();
+          },
+          (err) => console.error(err)
+        )
+        .then((data) => {
+          //   const a = data;
+          console.log(data);
+        });
+    },
+    (err) => {
+      removeClass(locationErr, "hidden");
+      curLocation.textContent = "----";
 
-    setTimeout(() => {
-      addClass(locationErr, "hidden");
-    }, 5500);
+      setTimeout(() => {
+        locationErr.style.top = "10%";
+      }, 800);
+
+      setTimeout(() => {
+        locationErr.style.top = "-10%";
+      }, 5000);
+
+      setTimeout(() => {
+        addClass(locationErr, "hidden");
+      }, 5500);
+    }
+  );
+};
+
+const locErr = function (err) {
+  locationErr.textContent = err.message;
+  removeClass(locationErr, "hidden");
+  curLocation.textContent = "----";
+
+  setTimeout(() => {
+    locationErr.style.top = "10%";
+  }, 800);
+
+  setTimeout(() => {
+    locationErr.style.top = "-10%";
+  }, 5000);
+
+  setTimeout(() => {
+    addClass(locationErr, "hidden");
+  }, 5500);
+};
+
+// getCurWeather();
+
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+const cur = async function () {
+  try {
+    const pos = await getPosition();
+    const { latitude: lat, longitude: lon } = pos.coords;
+    console.log(lat, lon);
+
+    const resWeather = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=29dbb8ece1d7df04ec2416e7dc4e2d61`
+    );
+
+    const dataWeather = await resWeather.json();
+    console.log(dataWeather);
+
+    const { temp, feels_like } = dataWeather.main;
+    const [{ description: desc, icon }] = dataWeather.weather;
+
+    const html = `
+    <img src="http://openweathermap.org/img/wn/${icon}.png
+    " alt="weather icon" class="cur-image" />
+    <p class="cur-weather">${Math.trunc(temp - 273)}℃</p>
+    <p class="dec">${desc}</p>
+    `;
+
+    curFore.innerHTML = "";
+    curFore.insertAdjacentHTML("beforeend", html);
+  } catch (err) {
+    console.error(err.message);
+    locErr(err);
   }
-);
+};
+
+cur();

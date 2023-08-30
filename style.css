@@ -146,14 +146,19 @@ input {
 
 .cur-image {
   display: block;
-  width: 12rem;
-  height: 12rem;
-  margin: 0 auto 3rem auto;
+  width: 8rem;
+  height: 8rem;
+  margin: 0 auto 2.5rem auto;
 }
 
 .cur-weather {
   font-size: 3.6rem;
   font-weight: 700;
+}
+
+.dec {
+  font-size: 1.9rem;
+  margin-top: 3vh;
 }
 
 .future-forecast {
