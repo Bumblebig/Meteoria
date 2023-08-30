@@ -134,46 +134,6 @@ setInterval(dateNTime, 1000);
 
 // LOCATION
 
-// let [lat, long] = curPosition;
-
-// const getCurWeather = function () {
-//   navigator.geolocation.getCurrentPosition(
-//     (position) => {
-//       const { latitude: lat, longitude: lon } = position.coords;
-//       console.log(lat, lon);
-//       fetch(
-//         `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=29dbb8ece1d7df04ec2416e7dc4e2d61`
-//       )
-//         .then(
-//           (response) => {
-//             response.json();
-//           },
-//           (err) => console.error(err)
-//         )
-//         .then((data) => {
-//           //   const a = data;
-//           console.log(data);
-//         });
-//     },
-//     (err) => {
-//       removeClass(locationErr, "hidden");
-//       curLocation.textContent = "----";
-
-//       setTimeout(() => {
-//         locationErr.style.top = "10%";
-//       }, 800);
-
-//       setTimeout(() => {
-//         locationErr.style.top = "-10%";
-//       }, 5000);
-
-//       setTimeout(() => {
-//         addClass(locationErr, "hidden");
-//       }, 5500);
-//     }
-//   );
-// };
-
 const locErr = function (err) {
   locationErr.textContent = err.message;
   removeClass(locationErr, "hidden");
@@ -228,8 +188,6 @@ const renderFuture = function (list) {
     );
     const { temp } = data.main;
     const [{ description: desc, icon }] = data.weather;
-
-    console.log(dt);
 
     newHtml += `
       <div class="future">
