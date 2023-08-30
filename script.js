@@ -210,19 +210,22 @@ const getPosition = function () {
   });
 };
 
+const key = "29dbb8ece1d7df04ec2416e7dc4e2d61";
+
 const cur = async function () {
   try {
     const pos = await getPosition();
     const { latitude: lat, longitude: lon } = pos.coords;
 
     const resWeather = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=29dbb8ece1d7df04ec2416e7dc4e2d61`
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${key}`
     );
     const dataWeather = await resWeather.json();
 
     const future = await fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=29dbb8ece1d7df04ec2416e7dc4e2d61`
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}`
     );
+
     const dataFuture = await future.json();
     const list = dataFuture.list;
 
