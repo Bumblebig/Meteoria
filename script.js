@@ -4,6 +4,7 @@
 /////////////////////////////////////////////////////////////
 // GENERAL
 const searchForm = document.querySelector(".search-form");
+const enterSearch = document.querySelector(".input-search-icon");
 const futureFore = document.querySelector(".future-forecast");
 
 // LOCATION
@@ -98,6 +99,86 @@ const dateNTime = function () {
   ).format(now);
 };
 
+// LOCATION
+
+const locErr = function (err) {
+  locationErr.textContent = err.message;
+  removeClass(locationErr, "hidden");
+  place.textContent = "--";
+  country.textContent = "--";
+  setTimeout(() => {
+    locationErr.style.top = "10%";
+  }, 800);
+
+  setTimeout(() => {
+    locationErr.style.top = "-10%";
+  }, 5000);
+
+  setTimeout(() => {
+    addClass(locationErr, "hidden");
+  }, 5500);
+};
+
+const render = function (data) {
+  const { temp, feels_like } = data.main;
+  const [{ description: desc, icon }] = data.weather;
+  const { country: countryCode } = data.sys;
+
+  place.textContent = data.name;
+  country.textContent = countryCode;
+  const html = `
+      <img src="http://openweathermap.org/img/wn/${icon}.png
+      " alt="weather icon" class="cur-image" />
+      <p class="cur-weather">${
+        temp > 100 ? Math.trunc(temp - 273) : Math.trunc(temp)
+      }°C</p>
+      <p class="dec">${desc}</p>
+      `;
+
+  curFore.innerHTML = "";
+  curFore.insertAdjacentHTML("beforeend", html);
+};
+
+const renderFuture = function (list) {
+  let newHtml = "";
+  const timeOptions = {
+    hour: "numeric",
+    minute: "numeric",
+  };
+
+  for (let i = 1; i <= 4; i++) {
+    //   console.log(list[i]);
+    const data = list[i];
+    const dt = new Date(data.dt_txt);
+    const time = new Intl.DateTimeFormat(navigator.locale, timeOptions).format(
+      dt
+    );
+    const { temp } = data.main;
+    const [{ description: desc, icon }] = data.weather;
+
+    newHtml += `
+        <div class="future">
+        <p class="day">${time}</p>
+        <img src="http://openweathermap.org/img/wn/${icon}.png
+        " alt="weather icon" class="image" />
+        <p class="data">${
+          temp > 100 ? Math.trunc(temp - 273) : Math.trunc(temp)
+        }°C</p>
+        <p class="futDesc">${desc}</p>
+      </div>
+        `;
+  }
+
+  futureFore.textContent = "";
+  futureFore.insertAdjacentHTML("beforeend", newHtml);
+};
+
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
 ////////////////////////////////////////////////////////////////
 // NAVIGATION IMPLEMENTATION
 navContainer.addEventListener("click", function (e) {
@@ -128,87 +209,14 @@ menuModal.addEventListener("click", function (e) {
   }
 });
 
+// MAIN APP IMPLEMENTATION
+
 // TIME AND DATE
 dateNTime();
 setInterval(dateNTime, 1000);
 
-// LOCATION
-
-const locErr = function (err) {
-  locationErr.textContent = err.message;
-  removeClass(locationErr, "hidden");
-  place.textContent = "--";
-  country.textContent = "--";
-  setTimeout(() => {
-    locationErr.style.top = "10%";
-  }, 800);
-
-  setTimeout(() => {
-    locationErr.style.top = "-10%";
-  }, 5000);
-
-  setTimeout(() => {
-    addClass(locationErr, "hidden");
-  }, 5500);
-};
-
-// getCurWeather();
-
-const render = function (data) {
-  const { temp, feels_like } = data.main;
-  const [{ description: desc, icon }] = data.weather;
-  const { country: countryCode } = data.sys;
-
-  place.textContent = data.name;
-  country.textContent = countryCode;
-  const html = `
-    <img src="http://openweathermap.org/img/wn/${icon}.png
-    " alt="weather icon" class="cur-image" />
-    <p class="cur-weather">${Math.trunc(temp - 273)}℃</p>
-    <p class="dec">${desc}</p>
-    `;
-
-  curFore.innerHTML = "";
-  curFore.insertAdjacentHTML("beforeend", html);
-};
-
-const renderFuture = function (list) {
-  let newHtml = "";
-  const timeOptions = {
-    hour: "numeric",
-    minute: "numeric",
-  };
-
-  for (let i = 1; i <= 4; i++) {
-    //   console.log(list[i]);
-    const data = list[i];
-    const dt = new Date(data.dt_txt);
-    const time = new Intl.DateTimeFormat(navigator.locale, timeOptions).format(
-      dt
-    );
-    const { temp } = data.main;
-    const [{ description: desc, icon }] = data.weather;
-
-    newHtml += `
-      <div class="future">
-      <p class="day">${time}</p>
-      <img src="http://openweathermap.org/img/wn/${icon}.png
-      " alt="weather icon" class="image" />
-      <p class="data">${Math.trunc(temp - 273)}℃</p>
-      <p class="futDesc">${desc}</p>
-    </div>
-      `;
-  }
-
-  futureFore.textContent = "";
-  futureFore.insertAdjacentHTML("beforeend", newHtml);
-};
-
-const getPosition = function () {
-  return new Promise(function (resolve, reject) {
-    navigator.geolocation.getCurrentPosition(resolve, reject);
-  });
-};
+///////////////////////////////////////////////////////
+// WEATHER DATA
 
 const key = "29dbb8ece1d7df04ec2416e7dc4e2d61";
 
@@ -238,3 +246,49 @@ const cur = async function () {
 };
 
 cur();
+
+// SEARCH
+enterSearch.addEventListener("click", function () {
+  if (searchForm.value) {
+    const searchContent = searchForm.value.toLowerCase().trim();
+
+    const geoCoding = async function () {
+      try {
+        const location = await fetch(
+          `https://api.openweathermap.org/data/2.5/weather?q=${searchContent}&units=metric&APPID=${key}`
+        );
+
+        const res = await location.json();
+        console.log(res);
+
+        const { lat, lon } = res.coord;
+        const future = await fetch(
+          `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}`
+        );
+
+        const dataFuture = await future.json();
+        const list = dataFuture.list;
+
+        renderFuture(list);
+        render(res);
+
+        searchForm.value = "";
+      } catch (err) {
+        locationErr.textContent = err.message;
+        removeClass(locationErr, "hidden");
+        setTimeout(() => {
+          locationErr.style.top = "10%";
+        }, 800);
+
+        setTimeout(() => {
+          locationErr.style.top = "-10%";
+        }, 5000);
+
+        setTimeout(() => {
+          addClass(locationErr, "hidden");
+        }, 5500);
+      }
+    };
+    geoCoding();
+  }
+});
