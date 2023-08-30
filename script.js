@@ -9,6 +9,8 @@ const curFore = document.querySelector(".cur-forecast");
 // LOCATION
 const locationErr = document.querySelector(".location-err");
 const curLocation = document.querySelector(".location");
+const place = document.querySelector(".place");
+const country = document.querySelector(".country");
 
 // TIME AND DATE
 const deskTime = document.querySelector(".hour");
@@ -206,7 +208,10 @@ const cur = async function () {
 
     const { temp, feels_like } = dataWeather.main;
     const [{ description: desc, icon }] = dataWeather.weather;
+    const { country: countryCode } = dataWeather.sys;
 
+    place.textContent = dataWeather.name;
+    country.textContent = countryCode;
     const html = `
     <img src="http://openweathermap.org/img/wn/${icon}.png
     " alt="weather icon" class="cur-image" />
