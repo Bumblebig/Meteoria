@@ -4,14 +4,15 @@
 /////////////////////////////////////////////////////////////
 // GENERAL
 const searchForm = document.querySelector(".search-form");
-const curFore = document.querySelector(".cur-forecast");
-const curUnit = document.querySelector(".cur-weather");
+const futureFore = document.querySelector(".future-forecast");
 
 // LOCATION
 const locationErr = document.querySelector(".location-err");
 const curLocation = document.querySelector(".location");
 const place = document.querySelector(".place");
 const country = document.querySelector(".country");
+const curFore = document.querySelector(".cur-forecast");
+const curUnit = document.querySelector(".cur-weather");
 
 // TIME AND DATE
 const deskTime = document.querySelector(".hour");
@@ -211,6 +212,40 @@ const render = function (data) {
   curFore.insertAdjacentHTML("beforeend", html);
 };
 
+const renderFuture = function (list) {
+  let newHtml = "";
+  const timeOptions = {
+    hour: "numeric",
+    minute: "numeric",
+  };
+
+  for (let i = 1; i <= 4; i++) {
+    //   console.log(list[i]);
+    const data = list[i];
+    const dt = new Date(data.dt_txt);
+    const time = new Intl.DateTimeFormat(navigator.locale, timeOptions).format(
+      dt
+    );
+    const { temp } = data.main;
+    const [{ description: desc, icon }] = data.weather;
+
+    console.log(dt);
+
+    newHtml += `
+      <div class="future">
+      <p class="day">${time}</p>
+      <img src="http://openweathermap.org/img/wn/${icon}.png
+      " alt="weather icon" class="image" />
+      <p class="data">${Math.trunc(temp - 273)}℃</p>
+      <p class="futDesc">${desc}</p>
+    </div>
+      `;
+  }
+
+  futureFore.textContent = "";
+  futureFore.insertAdjacentHTML("beforeend", newHtml);
+};
+
 const getPosition = function () {
   return new Promise(function (resolve, reject) {
     navigator.geolocation.getCurrentPosition(resolve, reject);
@@ -221,15 +256,19 @@ const cur = async function () {
   try {
     const pos = await getPosition();
     const { latitude: lat, longitude: lon } = pos.coords;
-    console.log(lat, lon);
 
     const resWeather = await fetch(
       `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=29dbb8ece1d7df04ec2416e7dc4e2d61`
     );
-
     const dataWeather = await resWeather.json();
-    console.log(dataWeather);
 
+    const future = await fetch(
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=29dbb8ece1d7df04ec2416e7dc4e2d61`
+    );
+    const dataFuture = await future.json();
+    const list = dataFuture.list;
+
+    renderFuture(list);
     render(dataWeather);
   } catch (err) {
     console.error(err.message);
