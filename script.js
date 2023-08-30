@@ -5,6 +5,7 @@
 // GENERAL
 const searchForm = document.querySelector(".search-form");
 const curFore = document.querySelector(".cur-forecast");
+const curUnit = document.querySelector(".cur-weather");
 
 // LOCATION
 const locationErr = document.querySelector(".location-err");
@@ -29,6 +30,11 @@ const settingsNav = document.querySelector(".desk-settings");
 const allModal = document.querySelectorAll(".modal");
 const menuModal = document.querySelector(".menu-modal");
 const backdrop = document.querySelector(".backdrop");
+
+// NULLIFYING EVERYTHING
+place.textContent = "--";
+country.textContent = "--";
+curUnit.textContent = "---";
 
 /////////////////////////////////////////////////////////
 // FUNCTIONS
@@ -129,49 +135,49 @@ setInterval(dateNTime, 1000);
 
 // let [lat, long] = curPosition;
 
-const getCurWeather = function () {
-  navigator.geolocation.getCurrentPosition(
-    (position) => {
-      const { latitude: lat, longitude: lon } = position.coords;
-      console.log(lat, lon);
-      fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=29dbb8ece1d7df04ec2416e7dc4e2d61`
-      )
-        .then(
-          (response) => {
-            response.json();
-          },
-          (err) => console.error(err)
-        )
-        .then((data) => {
-          //   const a = data;
-          console.log(data);
-        });
-    },
-    (err) => {
-      removeClass(locationErr, "hidden");
-      curLocation.textContent = "----";
+// const getCurWeather = function () {
+//   navigator.geolocation.getCurrentPosition(
+//     (position) => {
+//       const { latitude: lat, longitude: lon } = position.coords;
+//       console.log(lat, lon);
+//       fetch(
+//         `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=29dbb8ece1d7df04ec2416e7dc4e2d61`
+//       )
+//         .then(
+//           (response) => {
+//             response.json();
+//           },
+//           (err) => console.error(err)
+//         )
+//         .then((data) => {
+//           //   const a = data;
+//           console.log(data);
+//         });
+//     },
+//     (err) => {
+//       removeClass(locationErr, "hidden");
+//       curLocation.textContent = "----";
 
-      setTimeout(() => {
-        locationErr.style.top = "10%";
-      }, 800);
+//       setTimeout(() => {
+//         locationErr.style.top = "10%";
+//       }, 800);
 
-      setTimeout(() => {
-        locationErr.style.top = "-10%";
-      }, 5000);
+//       setTimeout(() => {
+//         locationErr.style.top = "-10%";
+//       }, 5000);
 
-      setTimeout(() => {
-        addClass(locationErr, "hidden");
-      }, 5500);
-    }
-  );
-};
+//       setTimeout(() => {
+//         addClass(locationErr, "hidden");
+//       }, 5500);
+//     }
+//   );
+// };
 
 const locErr = function (err) {
   locationErr.textContent = err.message;
   removeClass(locationErr, "hidden");
-  curLocation.textContent = "----";
-
+  place.textContent = "--";
+  country.textContent = "--";
   setTimeout(() => {
     locationErr.style.top = "10%";
   }, 800);
@@ -186,6 +192,24 @@ const locErr = function (err) {
 };
 
 // getCurWeather();
+
+const render = function (data) {
+  const { temp, feels_like } = data.main;
+  const [{ description: desc, icon }] = data.weather;
+  const { country: countryCode } = data.sys;
+
+  place.textContent = data.name;
+  country.textContent = countryCode;
+  const html = `
+    <img src="http://openweathermap.org/img/wn/${icon}.png
+    " alt="weather icon" class="cur-image" />
+    <p class="cur-weather">${Math.trunc(temp - 273)}℃</p>
+    <p class="dec">${desc}</p>
+    `;
+
+  curFore.innerHTML = "";
+  curFore.insertAdjacentHTML("beforeend", html);
+};
 
 const getPosition = function () {
   return new Promise(function (resolve, reject) {
@@ -206,21 +230,7 @@ const cur = async function () {
     const dataWeather = await resWeather.json();
     console.log(dataWeather);
 
-    const { temp, feels_like } = dataWeather.main;
-    const [{ description: desc, icon }] = dataWeather.weather;
-    const { country: countryCode } = dataWeather.sys;
-
-    place.textContent = dataWeather.name;
-    country.textContent = countryCode;
-    const html = `
-    <img src="http://openweathermap.org/img/wn/${icon}.png
-    " alt="weather icon" class="cur-image" />
-    <p class="cur-weather">${Math.trunc(temp - 273)}℃</p>
-    <p class="dec">${desc}</p>
-    `;
-
-    curFore.innerHTML = "";
-    curFore.insertAdjacentHTML("beforeend", html);
+    render(dataWeather);
   } catch (err) {
     console.error(err.message);
     locErr(err);
