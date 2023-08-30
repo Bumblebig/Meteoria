@@ -69,8 +69,7 @@ const navigation = function (e) {
   }
 };
 
-const dateNTime = function () {
-  const now = new Date();
+const dateNTime = function (data) {
   const dateOptions = {
     weekday: "long",
     day: "numeric",
@@ -86,23 +85,23 @@ const dateNTime = function () {
   date.textContent = new Intl.DateTimeFormat(
     navigator.locale,
     dateOptions
-  ).format(now);
+  ).format(data);
 
   deskTime.textContent = new Intl.DateTimeFormat(
     navigator.locale,
     timeOptions
-  ).format(now);
+  ).format(data);
 
   mobileTime.textContent = new Intl.DateTimeFormat(
     navigator.locale,
     timeOptions
-  ).format(now);
+  ).format(data);
 };
 
 // LOCATION
 
 const locErr = function (err) {
-  locationErr.textContent = err.message;
+  locationErr.textContent = "Something went wrong! Try again";
   removeClass(locationErr, "hidden");
   place.textContent = "--";
   country.textContent = "--";
@@ -212,8 +211,7 @@ menuModal.addEventListener("click", function (e) {
 // MAIN APP IMPLEMENTATION
 
 // TIME AND DATE
-dateNTime();
-setInterval(dateNTime, 1000);
+dateNTime(new Date());
 
 ///////////////////////////////////////////////////////
 // WEATHER DATA
@@ -259,7 +257,6 @@ enterSearch.addEventListener("click", function () {
         );
 
         const res = await location.json();
-        console.log(res);
 
         const { lat, lon } = res.coord;
         const future = await fetch(
@@ -272,9 +269,17 @@ enterSearch.addEventListener("click", function () {
         renderFuture(list);
         render(res);
 
+        const reverse = await fetch(
+          `http://api.timezonedb.com/v2.1/get-time-zone?key=589OEVBSJXAP&format=json&by=position&lat=${lat}&lng=${lon}`
+        );
+
+        const revData = await reverse.json();
+        const time = revData.formatted;
+        dateNTime(new Date(time));
+
         searchForm.value = "";
       } catch (err) {
-        locationErr.textContent = err.message;
+        locationErr.textContent = "Location not found";
         removeClass(locationErr, "hidden");
         setTimeout(() => {
           locationErr.style.top = "10%";
