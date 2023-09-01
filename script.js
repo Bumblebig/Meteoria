@@ -158,7 +158,7 @@ const renderFuture = function (list) {
     newHtml += `
         <div class="future">
         <p class="day">${time}</p>
-        <img src="http://openweathermap.org/img/wn/${icon}.png
+        <img src="https://openweathermap.org/img/wn/${icon}.png
         " alt="weather icon" class="image" />
         <p class="data">${
           temp > 100 ? Math.trunc(temp - 273) : Math.trunc(temp)
