@@ -270,8 +270,10 @@ enterSearch.addEventListener("click", function () {
         render(res);
 
         const reverse = await fetch(
-          `http://api.timezonedb.com/v2.1/get-time-zone?key=589OEVBSJXAP&format=json&by=position&lat=${lat}&lng=${lon}`
+          `https://api.timezonedb.com/v2.1/get-time-zone?key=589OEVBSJXAP&format=json&by=position&lat=${lat}&lng=${lon}`
         );
+
+        // console.log(reverse);
 
         const revData = await reverse.json();
         const time = revData.formatted;
@@ -280,6 +282,7 @@ enterSearch.addEventListener("click", function () {
         searchForm.value = "";
       } catch (err) {
         locationErr.textContent = "Location not found";
+        console.error(err);
         removeClass(locationErr, "hidden");
         setTimeout(() => {
           locationErr.style.top = "10%";
