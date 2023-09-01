@@ -24,6 +24,7 @@ Meteoria is a web-based weather forecast app that allows users to view real-time
 
 - HTML, CSS, JavaScript
 - OpenWeatherMap API
+- TimeZoneDB API
 - Netlify
 
 ## Contributing
@@ -34,4 +35,4 @@ Enjoy exploring weather conditions and planning your activities with Meteoria! I
 
 Note: Replace 'YOUR_API_KEY' with your actual API key. Images and URLs are placeholders.
 
-### This is still in production, some UI items are not completed yet!
+**This is still in production, some UI items are not completed yet!**
