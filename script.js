@@ -3,6 +3,7 @@
 // ELEMENTS SELECTION
 /////////////////////////////////////////////////////////////
 // GENERAL
+const body = document.querySelector("body");
 const searchForm = document.querySelector(".search-form");
 const enterSearch = document.querySelector(".input-search-icon");
 const futureFore = document.querySelector(".future-forecast");
@@ -31,12 +32,26 @@ const settingsNav = document.querySelector(".desk-settings");
 // MODALS AND BACKDROP
 const allModal = document.querySelectorAll(".modal");
 const menuModal = document.querySelector(".menu-modal");
+const uiModal = document.querySelector(".ui");
+const uiDesign = document.querySelector(".design");
 const backdrop = document.querySelector(".backdrop");
 
 // NULLIFYING EVERYTHING
 place.textContent = "--";
 country.textContent = "--";
 curUnit.textContent = "---";
+
+// CREATED VAR
+const backgrounds = [
+  "linear-gradient(50deg,hsla(205, 46%, 10%, 1) 0%,hsla(191, 28%, 23%, 1) 50%,hsla(207, 41%, 27%, 1) 100%)",
+  "linear-gradient(50deg, hsla(347, 89%, 61%, 1) 0%, hsla(242, 42%, 40%, 1) 100%)",
+  "linear-gradient(50deg, hsla(155, 23%, 71%, 1) 0%, hsla(302, 17%, 32%, 1) 100%)",
+  "linear-gradient(50deg, hsla(10, 82%, 65%, 1) 0%, hsla(290, 79%, 13%, 1) 100%)",
+  "linear-gradient(50deg,hsla(159, 35%, 45%, 1) 0%, hsla(176, 68%, 12%, 1) 100%)",
+];
+
+const classes = ["one", "two", "three", "four", "five"];
+const key = "29dbb8ece1d7df04ec2416e7dc4e2d61";
 
 /////////////////////////////////////////////////////////
 // FUNCTIONS
@@ -99,12 +114,8 @@ const dateNTime = function (data) {
 };
 
 // LOCATION
-
-const locErr = function (err) {
-  locationErr.textContent = "Something went wrong! Try again";
+const showError = function () {
   removeClass(locationErr, "hidden");
-  place.textContent = "--";
-  country.textContent = "--";
   setTimeout(() => {
     locationErr.style.top = "10%";
   }, 800);
@@ -116,6 +127,13 @@ const locErr = function (err) {
   setTimeout(() => {
     addClass(locationErr, "hidden");
   }, 5500);
+};
+const locErr = function (err) {
+  locationErr.textContent = "Something went wrong! Try again";
+  removeClass(locationErr, "hidden");
+  place.textContent = "--";
+  country.textContent = "--";
+  showError();
 };
 
 const render = function (data) {
@@ -152,11 +170,15 @@ const renderFuture = function (list) {
     const time = new Intl.DateTimeFormat(navigator.locale, timeOptions).format(
       dt
     );
+    const days = new Intl.DateTimeFormat(navigator.locale, {
+      weekday: "short",
+    }).format(dt);
     const { temp } = data.main;
     const [{ description: desc, icon }] = data.weather;
 
     newHtml += `
         <div class="future">
+        <p class="weekday">${days}</p>
         <p class="day">${time}</p>
         <img src="https://openweathermap.org/img/wn/${icon}.png
         " alt="weather icon" class="image" />
@@ -176,6 +198,17 @@ const getPosition = function () {
   return new Promise(function (resolve, reject) {
     navigator.geolocation.getCurrentPosition(resolve, reject);
   });
+};
+
+// UI OPTION
+const uiOptions = function () {
+  let html = "";
+
+  for (let i = 0; i < backgrounds.length; i++) {
+    html += `<div class="ui-design ${classes[i]}" data-background="${backgrounds[i]}"></div>`;
+  }
+
+  uiDesign.insertAdjacentHTML("afterbegin", html);
 };
 
 ////////////////////////////////////////////////////////////////
@@ -215,8 +248,6 @@ dateNTime(new Date());
 
 ///////////////////////////////////////////////////////
 // WEATHER DATA
-
-const key = "29dbb8ece1d7df04ec2416e7dc4e2d61";
 
 const cur = async function () {
   try {
@@ -273,30 +304,28 @@ enterSearch.addEventListener("click", function () {
           `https://api.timezonedb.com/v2.1/get-time-zone?key=589OEVBSJXAP&format=json&by=position&lat=${lat}&lng=${lon}`
         );
 
-        // console.log(reverse);
-
         const revData = await reverse.json();
         const time = revData.formatted;
         dateNTime(new Date(time));
 
         searchForm.value = "";
       } catch (err) {
-        locationErr.textContent = "Location not found";
+        locationErr.textContent = "Something went wrong! Location not found";
         console.error(err);
-        removeClass(locationErr, "hidden");
-        setTimeout(() => {
-          locationErr.style.top = "10%";
-        }, 800);
-
-        setTimeout(() => {
-          locationErr.style.top = "-10%";
-        }, 5000);
-
-        setTimeout(() => {
-          addClass(locationErr, "hidden");
-        }, 5500);
+        showError();
       }
     };
     geoCoding();
+  }
+});
+
+// UI DESIGNS
+
+uiOptions();
+
+uiDesign.addEventListener("click", function (e) {
+  const id = e.target.closest(".ui-design");
+  if (id) {
+    body.style.background = `${id.dataset.background}`;
   }
 });

@@ -190,6 +190,11 @@ input {
   gap: 1.6rem;
 }
 
+.weekday {
+  font-size: 1.9rem;
+  font-weight: 600;
+}
+
 .day {
   font-size: 1.8rem;
   font-weight: 600;
@@ -324,6 +329,49 @@ h4 {
   transition: all ease-in 0.45s;
 }
 
+/* UI DISPLAY */
+.one {
+  background: linear-gradient(
+    50deg,
+    hsla(205, 46%, 10%, 1) 0%,
+    hsla(191, 28%, 23%, 1) 50%,
+    hsla(207, 41%, 27%, 1) 100%
+  );
+}
+
+.two {
+  background: linear-gradient(
+    50deg,
+    hsla(347, 89%, 61%, 1) 0%,
+    hsla(242, 42%, 40%, 1) 100%
+  );
+}
+
+.three {
+  background: linear-gradient(
+    50deg,
+    hsla(155, 23%, 71%, 1) 0%,
+    hsla(302, 17%, 32%, 1) 100%
+  );
+}
+
+.four {
+  background: linear-gradient(
+    50deg,
+    hsla(10, 82%, 65%, 1) 0%,
+    hsla(290, 79%, 13%, 1) 100%
+  );
+}
+
+.five {
+  background: linear-gradient(
+    50deg,
+    hsla(159, 35%, 45%, 1) 0%,
+    hsla(176, 68%, 12%, 1) 100%
+  );
+}
+
+/* ********************* */
 .hidden {
   display: none;
 }
