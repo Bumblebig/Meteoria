@@ -171,7 +171,7 @@ const renderFuture = function (list) {
       dt
     );
     const days = new Intl.DateTimeFormat(navigator.locale, {
-      weekday: "short",
+      weekday: "long",
     }).format(dt);
     const { temp } = data.main;
     const [{ description: desc, icon }] = data.weather;
