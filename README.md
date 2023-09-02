@@ -34,5 +34,3 @@ Contributions are welcome! If you find a bug or have an idea for an enhancement,
 Enjoy exploring weather conditions and planning your activities with Meteoria! If you have any questions or feedback, please don't hesitate to reach out.
 
 Note: Replace 'YOUR_API_KEY' with your actual API key. Images and URLs are placeholders.
-
-**This is still in production, some UI items are not completed yet!**
