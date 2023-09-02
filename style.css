@@ -52,6 +52,14 @@ p {
   font-weight: 400;
 }
 
+svg {
+  width: 3rem;
+  height: 3rem;
+  fill: none;
+  stroke-width: 1.5;
+  stroke: currentColor;
+}
+
 /* Main app */
 main {
   width: 100%;
@@ -213,6 +221,7 @@ aside {
   flex-flow: column nowrap;
   gap: 30px;
   width: 6.8rem;
+  height: 100vh;
 }
 
 aside svg {
@@ -223,6 +232,11 @@ aside svg {
 
 aside svg:hover {
   stroke: #dee2e6;
+}
+
+.desk-nav {
+  width: 4.798rem;
+  height: 3.4rem;
 }
 
 /* MODAL */
