@@ -307,6 +307,7 @@ const getSearch = function () {
         dateNTime(new Date(time));
 
         searchForm.value = "";
+        searchForm.blur();
       } catch (err) {
         locationErr.textContent = "Something went wrong! Location not found";
         showError();
