@@ -269,15 +269,13 @@ const cur = async function () {
     renderFuture(list);
     render(dataWeather);
   } catch (err) {
-    console.error(err.message);
     locErr(err);
   }
 };
 
 cur();
 
-// SEARCH
-enterSearch.addEventListener("click", function () {
+const getSearch = function () {
   if (searchForm.value) {
     const searchContent = searchForm.value.toLowerCase().trim();
 
@@ -311,12 +309,18 @@ enterSearch.addEventListener("click", function () {
         searchForm.value = "";
       } catch (err) {
         locationErr.textContent = "Something went wrong! Location not found";
-        console.error(err);
         showError();
       }
     };
     geoCoding();
   }
+};
+
+// SEARCH
+enterSearch.addEventListener("click", getSearch);
+
+searchForm.addEventListener("keypress", function (e) {
+  if (e.key === "Enter") getSearch();
 });
 
 // UI DESIGNS
@@ -327,5 +331,6 @@ uiDesign.addEventListener("click", function (e) {
   const id = e.target.closest(".ui-design");
   if (id) {
     body.style.background = `${id.dataset.background}`;
+    removeModal();
   }
 });
