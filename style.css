@@ -171,12 +171,11 @@ input {
 }
 
 .future-forecast {
-  width: 90%;
-  margin: 0 auto;
-  margin-top: 10vh;
+  width: max-content;
+  margin: 10vh auto 0 auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 5rem;
 }
 
 .future {
@@ -376,7 +375,13 @@ h4 {
   display: none;
 }
 
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 880px) {
+  .future-forecast {
+    gap: 2.5rem;
+  }
+}
+
+@media only screen and (max-width: 780px) {
   body {
     min-width: 375px;
 
@@ -470,6 +475,7 @@ h4 {
   }
 
   .future-forecast {
+    width: 90%;
     flex-flow: column;
     gap: 3rem;
   }
